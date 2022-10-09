@@ -1,9 +1,9 @@
 version: "3.7"
 
 services:
-  app:
+  dnyf_user_app:
     build: .
-    container_name: app
+    container_name: dnyf_user_app
     command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
     volumes:
       - ./:/src/
@@ -12,9 +12,9 @@ services:
     environment:
       - DATABASE_URL=postgresql://fastapi:fastapi@db/fastapi
 
-  db:
+  dnyf_user_db:
     image: postgres:12.1-alpine
-    container_name: db
+    container_name: dnyf_user_db
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:

@@ -1,14 +1,14 @@
 [
   {
     "id": 1,
-    "name": "Márcio",
-    "mail": "example@mail.com",
-    "phone": "98769878"
+    "uni": "hl3605",
+    "firstname": "Hoseung",
+    "lastname": "Lee"
   },
   {
     "id": 2,
-    "name": "Leandro",
-    "mail": "example_leandro@mail.com",
-    "phone": "94435676"
+    "uni": "jp0000",
+    "firstname": "Joe",
+    "lastname": "Pizza"
   }
 ]

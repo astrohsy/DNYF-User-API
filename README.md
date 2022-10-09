@@ -1,4 +1,4 @@
-# DefinitelyNotYankeesFans
+# DNYF User API Service
 
 # Installation
 
