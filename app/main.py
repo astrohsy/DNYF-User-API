@@ -2,8 +2,10 @@ from fastapi import FastAPI, HTTPException
 from starlette.responses import Response
 
 from app.api import api
+from .config.setting import Settings
 
 app = FastAPI()
+print(Settings())
 
 
 @app.get("/")
