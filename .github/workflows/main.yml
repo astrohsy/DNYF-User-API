@@ -24,5 +24,8 @@ jobs:
           docker build -t $IMAGE_NAME:latest .
           
           docker rm -f $CONTAINER_NAME
-          docker run -d $CONTAINER_NAME $IMAGE_NAME:latest
+          docker run -d \
+            -p 8000:8000 \
+            --name $CONTAINER_NAME \
+            $IMAGE_NAME:latest
           
