@@ -17,6 +17,12 @@ jobs:
         run: |
           SHA=${{github.sha}}
           TAG=${SHA:0:7}
+          IMAGE_NAME=dnyf_user_api
+          CONTAINER_NAME=dnyf_user_api_container
           
-          docker build -t dnyf_user_api:$TAG .
+          docker build -t $IMAGE_NAME:$TAG .
+          docker build -t $IMAGE_NAME:latest .
+          
+          docker rm -f $CONTAINER_NAME
+          docker run -d $CONTAINER_NAME $IMAGE_NAME:latest
           
