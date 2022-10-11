@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Run a multi-line script
+      - name: Build image
         run: |
           SHA=${{github.sha}}
           TAG=${SHA:0:7}
@@ -22,6 +22,10 @@ jobs:
           
           docker build -t $IMAGE_NAME:$TAG .
           docker build -t $IMAGE_NAME:latest .
+      - name: Deploy container
+        run: |
+          IMAGE_NAME=dnyf_user_api
+          CONTAINER_NAME=dnyf_user_api_container
           
           docker rm -f $CONTAINER_NAME
           docker run -d \
