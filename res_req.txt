@@ -1,0 +1,46 @@
+GET /users/:uid
+    request:
+        {
+            "uid": int
+        }
+    response:
+        {
+            "uid": int,
+            "alias": string,
+            "first_name": string,
+            "last_name": string,
+            "email": string,
+            "affiliation": string
+        }
+
+GET /users
+
+POST /users
+    request:
+        {
+            "uid": int,
+            "alias": string,
+            "first_name": string,
+            "last_name": string,
+            "email": string,
+            "bio":string
+            "affiliation": string
+        }
+
+DELETE /users/:uid
+    request:
+    {
+        "uid":int
+    }
+
+PUT /users/:uid
+    request:
+        {
+            "uid": int,
+            "alias": string,
+            "first_name": string,
+            "last_name": string,
+            "email": string,
+            "bio":string
+            "affiliation": string
+        }

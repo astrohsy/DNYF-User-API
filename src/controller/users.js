@@ -44,7 +44,7 @@ const goodbye_friend = (req, res) => {
 }
 
 module.exports = {
-    who_you_is,
+    who_is_you,
     hello_friend,
     witness_protection_service,
     goodbye_friend
