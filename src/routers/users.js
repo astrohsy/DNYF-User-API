@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const user_controller = require("../controller/users")
+const user_controller = require("../controller/users");
 
-router.get("/users:uid", user_controller.get_user_info)
+// auth0 stuff
+const jwt = require('express-jwt');
+
+router.get("/users:uid")
 router.get("/users")
 router.post("/users")
 router.delete("/users:uid")

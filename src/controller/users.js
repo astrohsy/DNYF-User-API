@@ -1,4 +1,4 @@
-const db = require("../db")
+// const db = require("/db")
 
 // Get single user info
 const who_is_you = (req, res) => {
