@@ -3,6 +3,13 @@
     "dotenv": "^16.0.3",
     "express-jwt": "^7.7.5",
     "express-openid-connect": "^2.9.0",
-    "jwks-rsa": "^2.1.5"
+    "express-paginate": "^1.0.2",
+    "firebase": "^9.13.0",
+    "firebase-admin": "^11.2.0",
+    "jwks-rsa": "^2.1.5",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.25.7",
+    "swagger": "^0.7.5",
+    "yamljs": "^0.3.0"
   }
 }
