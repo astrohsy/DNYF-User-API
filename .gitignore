@@ -275,4 +275,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Env variables
+*.env
+
 # End of https://www.gitignore.io/api/linux,macos,python,pycharm,windows,visualstudiocode
