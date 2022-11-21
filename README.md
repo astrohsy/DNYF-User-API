@@ -2,7 +2,7 @@
 This is the User API Service for the Study Buddy webapp. This service will maintain user information and manage authentication/login.
 
 # Installation
-npm install
+npm install    
 npm run app.js
 
 # Entrypoints
