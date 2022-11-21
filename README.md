@@ -1,37 +1,71 @@
 # DNYF User API Service
+This is the User API Service for the Study Buddy webapp. This service will maintain user information and manage authentication/login.
 
 # Installation
+npm install
+npm run app.js
 
-```bash
-virtualenv env
-. env/bin/activate
+# Entrypoints
+
+```
+GET /users
+Response
+{
+        "metadata":
+        {
+                "page": page_number,
+                "per_page": per_page,
+                "page_count": page_count,
+                "total_count": total_count,
+                "links": [
+                        {"self": "/users?page=page_number&per_page=per_page"},
+                        {"first": "/users?page=0&per_page=per_page"},
+                        {"previous": "/users?page=prev_page&per_page=per_page"},
+                        {"next": "/users?page=next_page&per_page=per_page"},
+                        {"last": "/users?page=page_count&per_page=per_page"}
+                ]
+        },
+        "records": [
+                {
+                        "uid": uid,
+                        "first_name": first_name,
+                        "last_name": last_name,
+                        "affiliation": affiliation,
+                        "uri": "/?users:uid"
+                 }
+        ]
+        
+}
 ```
 
-# Execution
-
-```bash
-# Database initialization
-export DATABASE_URI=postgresql://fastapi:fastapi@localhost:6000/fastapi
-sh test_database.sh
-alembic upgrade head
-
-# App lauching
-uvicorn app.main:app --reload
 ```
-
-# Test
-```bash
-curl -XPOST -H "Content-Type: application/json" \
-        localhost:8000/api/users/ \
-        -d '{"email": "pp@avengers.org", "name": "Peter Parker"}'
-curl -XGET localhost:8000/api/users/
-```
-
-# To do Database update
-[Tutorial Link](https://alembic.sqlalchemy.org/en/latest/tutorial.html)
-```bash
- alembic revision -m "create account table"
- # Define schema upgrade rules in the generated file.
- alembic upgrade head
+POST /users
+Response
+{
+        "metadata":
+        {
+                "page": page_number,
+                "per_page": per_page,
+                "page_count": page_count,
+                "total_count": total_count,
+                "links": [
+                        {"self": "/users?page=page_number&per_page=per_page"},
+                        {"first": "/users?page=0&per_page=per_page"},
+                        {"previous": "/users?page=prev_page&per_page=per_page"},
+                        {"next": "/users?page=next_page&per_page=per_page"},
+                        {"last": "/users?page=page_count&per_page=per_page"}
+                ]
+        },
+        "records": [
+                {
+                        "uid": uid,
+                        "first_name": first_name,
+                        "last_name": last_name,
+                        "affiliation": affiliation,
+                        "uri": "/?users:uid"
+                 }
+        ]
+        
+}
 ```
 
