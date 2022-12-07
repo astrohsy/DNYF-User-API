@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const routers = require('./routers/users');
+
 require('dotenv').config();
 
 const { auth } = require('express-openid-connect');
@@ -16,7 +17,9 @@ app.use(
 );
 app.use("/", routers);
 
+app.use(express.json());
+
 const port = process.env.APP_PORT || 3000
 app.listen(port, () => {
-    console.log(`istening on ${port}`);
+    console.log(`Listening on ${port}`);
 });

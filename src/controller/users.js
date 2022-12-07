@@ -1,50 +1,85 @@
-// const db = require("/db")
+const queries = require('../db/queries')
 
-// Get single user info
+const get_page = (page_number, page_count) => {
+    const limit = page_count ? +page_count : 10
+    const offset = page_number ? page_number * limit : 0;
+    return { limit, offset }
+}
+
+
+// Get single user info don
 const who_is_you = (req, res) => {
-    const uid = parseInt(req.params.uid)
+    const uid = req.params.uid;
+    console.log("UID: " + uid)
+    
+    const result = queries.findUser(uid);
+    if (Object.keys(result).length) {
+        res.send(result)
+    } else {
+        res.status(404).send("User not found: " + uid)
+    }
 
-    // SELECT * FROM users
-    // WHERE users.uid = uid
-    // res.status(200).json(res.rows)
 }
 
 // fetch all users
-const who_are_yall = (req, res) => {
-    // pagination buddy ol pal
+const who_are_yall = async function(req, res) {
+    const { page_number, per_page } = req.query;    
+    const { limit, offset } = get_page(page_number, per_page);
+
+    const response = await queries.getUsers(page_number, limit, offset);
+    if (res == false){
+        res.status(500).send({message: "Error retreiving users"})
+    }
+    res.send(response)
 }
 
 // Create new user
 const hello_friend = (req, res) => {
+    console.log(req.body);
+    console.log(req.headers)
     const {
-        alias,
+        uid,
         first_name,
-        last_name,
-        email,
-        bio,
-        affiliation
+        last_name
     } = req.body
+
+    if (Object.keys(queries.findUser(uid)).length) {
+        res.send("User already exists!")
+    } else {
+        queries.insertUser(uid, first_name, last_name)
+        res.send("New User Registered")
+    }
 }
 
 // Update current user
 const witness_protection_service = (req, res) => {
     const uid = parseInt(req.params.uid)
     const {
-        alias,
         first_name,
-        email,
-        bio,
-        affiliation
+        last_name,
     } = req.body
+    const result = queries.updateUsers(uid, first_name, last_name)
+    if (result == true) {
+        console.log("User updated")
+    } else {
+        res.status(500).log("Could not upate user: " + uid)
+    }
 }
 
 // Delete user
 const goodbye_friend = (req, res) => {
-    const uid = parseInt(req.params.uid)
+    const uid = req.params.uid
+    const result = queries.deleteUser(uid);
+    if (result == true) {
+        res.send("User " + uid + " deleted")
+    } else {
+        res.status(500).send("Could not delete User wit UID: " + uid)
+    }
 }
 
 module.exports = {
     who_is_you,
+    who_are_yall,
     hello_friend,
     witness_protection_service,
     goodbye_friend

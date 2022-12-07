@@ -1,0 +1,166 @@
+---
+openapi: 3.0.0
+info:
+  title: DNYF Users API
+  description: DNYF Users Service
+  version: 0.1.0
+servers:
+- url: https://virtserver.swaggerhub.com/RCDACIV/DNYF-Users-API/0.1.0
+  description: SwaggerHub API Auto Mocking
+- url: http://localhost:3000/users
+  description: SwaggerHub API Auto Mocking
+paths:
+  /users:
+    get:
+      summary: Get collection of users
+      parameters:
+      - name: page_number
+        in: query
+        description: Page number
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: page_count
+        in: query
+        description: Total page count
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+    post:
+      summary: Get or create current user
+      requestBody:
+        description: Inserts new user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/users_body'
+      responses:
+        "200":
+          description: success
+        "500":
+          description: Internal server error
+  /users/{uid}:
+    get:
+      summary: Get specific user
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Found user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+        "404":
+          description: User not found
+    put:
+      summary: Update specified user's information
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Information to be updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/users_uid_body'
+      responses:
+        "200":
+          description: OK
+    delete:
+      summary: Delete specified user
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful deletion
+        "500":
+          description: Internal server error
+components:
+  schemas:
+    inline_response_200:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of records
+        records:
+          type: object
+          properties:
+            uid:
+              type: string
+              description: User ID
+            first_name:
+              type: string
+              description: User's first name
+            last_name:
+              type: string
+              description: User's last name
+          description: The list of users
+        total_pages:
+          type: integer
+          description: Total amount of pages
+        current_page:
+          type: integer
+          description: Current page number
+    users_body:
+      type: object
+      properties:
+        uid:
+          type: string
+          description: New user id
+        first_name:
+          type: string
+          description: New user first name
+        last_name:
+          type: string
+          description: New user last name
+    inline_response_200_1:
+      type: object
+      properties:
+        uid:
+          type: string
+          description: User ID
+        first_name:
+          type: string
+          description: User's first name
+        last_name:
+          type: string
+          description: User's last name
+    users_uid_body:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: First name to be updated
+        last_name:
+          type: string
+          description: Last name to be updated

@@ -8,5 +8,8 @@ module.exports = new Sequilize({
     password: process.env.DB_PASS,
     port: process.env.port || 3306,
     database: process.env.DB,
+    define: {
+        timestamps: false
+    },
     logging: (log) => console.log("logging:", log)
-})
+});
