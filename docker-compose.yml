@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  api:
+    image: dnyf-user-api
+    build:
+      context: ./src
+      dockerfile: ./Dockerfile
+    ports:
+      - 4103:4103
+    networks:
+      dnyfcomposite:
+        aliases:
+          - dnyf-user-microservice
+      dnyfnet:
+    depends_on:
+      - db
+  
+  db:
+    image: mysql:8.0
+    ports:
+      - 3306:3306
+    environment:
+      - DB_HOST=db_host
+      - DB_USER=db_user
+      - DB_PASS=db_pass
+      - DB=dnyf_users_db
+    networks:
+      dnyfcomposite:
+      dnyfnet:
+        aliases:
+          - dnyf_users_db
+
+volumes:
+  mysql:
+  mysql_config:
+
+networks:
+  dnyfnet:
+  dnyfcomposite:
+    external: true
