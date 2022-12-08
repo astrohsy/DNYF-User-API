@@ -3,27 +3,27 @@ This is the User API Service for the Study Buddy webapp. This service will maint
 
 # Installation
 ## Testing Environment Set-up
-'''
+```
 docker-compose build
 docker-compose up
-'''
+```
 ## Testing Environment Tear-down
-'''
+```
 docker-compose down
 docker-compose down --volum'es
-'''
+```
 ## Build/Run Individually
-'''
+```
 docker build . -t dnyf-user-api
-'''
-'''
+```
+```
 docker run -d -p 4103:4103 --name dnyf-user-api \
         -e DB_HOST='<DB host url>' \
         -e DB_USER='<DB username>' \
         -e DB_PASS='<DB password>' \
         -e DB='<DB name>' \
         dnyf-user-api
-'''
+```
 
 # API calls
 Fetch list of all users:
@@ -70,17 +70,17 @@ GET /users/{uid}
 			"first_name": "string",
 			"last_name": "string"
 		}
-'''
+```
 
 Delete users
-'''
+```
 DELETE /users/{uid}
 	Parameters:
 		"uid": "string"
-'''
+```
 
 Update users
-'''
+```
 PUT /users/{uid}
 	Parameters:
 		"uid": "string"
@@ -89,4 +89,4 @@ PUT /users/{uid}
 			"first_name": "string",
 			"last_name": "string"
 		}
-'''
+```
