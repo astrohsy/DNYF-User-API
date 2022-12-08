@@ -60,7 +60,7 @@ POST /users
 ```
 
 Get specified user:
-'''
+```
 GET /users/{uid}
 	Parameters:
 		"uid": "string"
