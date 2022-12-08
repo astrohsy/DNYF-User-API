@@ -9,7 +9,6 @@ GET /users/:uid
             "alias": string,
             "first_name": string,
             "last_name": string,
-            "email": string,
             "affiliation": string
         }
 

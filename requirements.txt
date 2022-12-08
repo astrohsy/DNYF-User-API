@@ -1,9 +1,0 @@
-fastapi==0.85.0
-uvicorn==0.18.3
-pytest==7.1.3
-requests==2.28.1
-SQLAlchemy==1.4.41
-pydantic==1.10.2
-python-dotenv==0.21.0
-fastapi-utils
-psycopg2

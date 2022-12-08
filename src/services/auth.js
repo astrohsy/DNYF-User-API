@@ -1,18 +1,15 @@
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { GoogleAuthProvider } from "firebase/auth";
-
+const { initializeApp } = require("firebase/app");
+const { getAnalytics } = require("firebase/analytics");
+const { getAuth } = require("firebase/auth")
 const firebaseConfig = {
     apiKey: process.env.API_KEY,
     authDomain: process.env.AUTH_DOMAIN,
-    projectId: process.env.PROCESS_ID,
+    projectId: process.env.PROJECT_ID,
     storageBucket: process.env.STORAGE_BUCKET,
     messagingSenderId: process.env.MESSAGING_SENDER_ID,
     appId: process.env.APP_ID,
     measuremeantId: process.env.MEASUREMENT_ID
 }
-
-const provider = new GoogleAuthProvider();
 
 class Firebase {
     constructor() {
@@ -20,4 +17,6 @@ class Firebase {
     }
 }
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const auth = getAuth(app);
+
+module.exports = getAuth(app);

@@ -2,70 +2,91 @@
 This is the User API Service for the Study Buddy webapp. This service will maintain user information and manage authentication/login.
 
 # Installation
-npm install    
-npm run app.js
+## Testing Environment Set-up
+```
+docker-compose build
+docker-compose up
+```
+## Testing Environment Tear-down
+```
+docker-compose down
+docker-compose down --volum'es
+```
+## Build/Run Individually
+```
+docker build . -t dnyf-user-api
+```
+```
+docker run -d -p 4103:4103 --name dnyf-user-api \
+        -e DB_HOST='<DB host url>' \
+        -e DB_USER='<DB username>' \
+        -e DB_PASS='<DB password>' \
+        -e DB='<DB name>' \
+        dnyf-user-api
+```
 
-# Entrypoints
-
+# API calls
+Fetch list of all users:
 ```
 GET /users
-Response
-{
-        "metadata":
-        {
-                "page": page_number,
-                "per_page": per_page,
-                "page_count": page_count,
-                "total_count": total_count,
-                "links": [
-                        {"self": "/users?page=page_number&per_page=per_page"},
-                        {"first": "/users?page=0&per_page=per_page"},
-                        {"previous": "/users?page=prev_page&per_page=per_page"},
-                        {"next": "/users?page=next_page&per_page=per_page"},
-                        {"last": "/users?page=page_count&per_page=per_page"}
-                ]
-        },
-        "records": [
-                {
-                        "uid": uid,
-                        "first_name": first_name,
-                        "last_name": last_name,
-                        "affiliation": affiliation,
-                        "uri": "/?users:uid"
-                 }
-        ]
-        
-}
+	Parameters:
+		page_number, page_count
+	Example call:
+		/users?page_number=0&page_count=1
+	Response body:
+		{
+			{
+				"total": integer,
+				"records": {
+					"uid": "string",
+					"first_name": "string",
+					"last_name": "string"
+				},
+				"total_pages": integer,
+				"current_page": integer
+			}       
+		}
 ```
 
+Create new user:
 ```
 POST /users
-Response
-{
-        "metadata":
-        {
-                "page": page_number,
-                "per_page": per_page,
-                "page_count": page_count,
-                "total_count": total_count,
-                "links": [
-                        {"self": "/users?page=page_number&per_page=per_page"},
-                        {"first": "/users?page=0&per_page=per_page"},
-                        {"previous": "/users?page=prev_page&per_page=per_page"},
-                        {"next": "/users?page=next_page&per_page=per_page"},
-                        {"last": "/users?page=page_count&per_page=per_page"}
-                ]
-        },
-        "records": [
-                {
-                        "uid": uid,
-                        "first_name": first_name,
-                        "last_name": last_name,
-                        "affiliation": affiliation,
-                        "uri": "/?users:uid"
-                 }
-        ]
-        
-}
+	Request Body:
+		{
+			"uid": "string",
+			"first_name": "string",
+			"last_name": "string"
+		}
 ```
 
+Get specified user:
+'''
+GET /users/{uid}
+	Parameters:
+		"uid": "string"
+	Response body:
+		{
+			"uid": "string",
+			"first_name": "string",
+			"last_name": "string"
+		}
+```
+
+Delete users
+```
+DELETE /users/{uid}
+	Parameters:
+		"uid": "string"
+```
+
+Update users
+```
+PUT /users/{uid}
+	Parameters:
+		"uid": "string"
+	Response body:
+		{
+			"first_name": "string",
+			"last_name": "string"
+		}
+```

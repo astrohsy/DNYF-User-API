@@ -278,4 +278,6 @@ $RECYCLE.BIN/
 # Env variables
 *.env
 
+node_modules/
+
 # End of https://www.gitignore.io/api/linux,macos,python,pycharm,windows,visualstudiocode
