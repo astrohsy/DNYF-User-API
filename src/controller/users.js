@@ -7,7 +7,7 @@ const get_page = (page_number, page_count) => {
 }
 
 
-// Get single user info don
+// Get single user info
 const who_is_you = async function(req, res) {
     const uid = req.params.uid;
     console.log("UID: " + uid)
