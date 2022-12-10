@@ -8,17 +8,16 @@ const get_page = (page_number, page_count) => {
 
 
 // Get single user info don
-const who_is_you = (req, res) => {
+const who_is_you = async function(req, res) {
     const uid = req.params.uid;
     console.log("UID: " + uid)
     
-    const result = queries.findUser(uid);
+    const result = await queries.findUser(uid);
     if (Object.keys(result).length) {
         res.send(result)
     } else {
         res.status(404).send("User not found: " + uid)
     }
-
 }
 
 // fetch all users
@@ -34,7 +33,7 @@ const who_are_yall = async function(req, res) {
 }
 
 // Create new user
-const hello_friend = (req, res) => {
+const hello_friend = async function (req, res){
     console.log(req.body);
     console.log(req.headers)
     const {
@@ -43,8 +42,8 @@ const hello_friend = (req, res) => {
         last_name
     } = req.body
 
-    if (Object.keys(queries.findUser(uid)).length) {
-        res.send("User already exists!")
+    if (Object.keys(await queries.findUser(uid)).length) {
+        res.status(409).send("User already exists!")
     } else {
         queries.insertUser(uid, first_name, last_name)
         res.send("New User Registered")
@@ -52,13 +51,13 @@ const hello_friend = (req, res) => {
 }
 
 // Update current user
-const witness_protection_service = (req, res) => {
+const witness_protection_service = async function (req, res){
     const uid = parseInt(req.params.uid)
     const {
         first_name,
         last_name,
     } = req.body
-    const result = queries.updateUsers(uid, first_name, last_name)
+    const result = await queries.updateUsers(uid, first_name, last_name)
     if (result == true) {
         console.log("User updated")
     } else {

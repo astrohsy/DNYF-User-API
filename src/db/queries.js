@@ -28,8 +28,8 @@ async function findUser(uid) {
     const data = await User.findOne({
         where: { uid: uid}
     });
-    if(data){
-        return data;
+    if(data != null){
+        return data.dataValues;
     } else {
         return {};
     }
