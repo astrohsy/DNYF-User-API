@@ -6,8 +6,8 @@ module.exports = new Sequilize({
     host: process.env.DB_HOST,
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
-    port: process.env.port || 3306,
-    database: process.env.DB,
+    port: process.env.DB_PORT || 3306,
+    database: process.env.DB_NAME,
     define: {
         timestamps: false
     },
