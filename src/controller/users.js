@@ -11,7 +11,7 @@ const get_page = (page_number, page_count) => {
 const who_is_you = async function(req, res) {
     const uid = req.params.uid;
     console.log("UID: " + uid)
-    
+
     const result = await queries.findUser(uid);
     if (Object.keys(result).length) {
         res.send(result)
@@ -22,7 +22,7 @@ const who_is_you = async function(req, res) {
 
 // fetch all users
 const who_are_yall = async function(req, res) {
-    const { page_number, per_page } = req.query;    
+    const { page_number, per_page } = req.query;
     const { limit, offset } = get_page(page_number, per_page);
 
     const response = await queries.getUsers(page_number, limit, offset);
@@ -52,7 +52,7 @@ const hello_friend = async function (req, res){
 
 // Update current user
 const witness_protection_service = async function (req, res){
-    const uid = parseInt(req.params.uid)
+    const uid = req.params.uid
     const {
         first_name,
         last_name,
@@ -60,6 +60,7 @@ const witness_protection_service = async function (req, res){
     const result = await queries.updateUsers(uid, first_name, last_name)
     if (result == true) {
         console.log("User updated")
+        res.send(result)
     } else {
         res.status(500).log("Could not upate user: " + uid)
     }
