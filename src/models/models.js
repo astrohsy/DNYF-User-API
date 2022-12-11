@@ -14,7 +14,7 @@ const User = db.define("Users", {
     last_name: {
         type: Sequilize.STRING,
         allowNull: false,
-    }
+    },
 });
-
+User.sync({ force: false });
 module.exports = User;
