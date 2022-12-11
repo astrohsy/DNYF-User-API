@@ -10,8 +10,14 @@ docker-compose up
 ## Testing Environment Tear-down
 ```
 docker-compose down
-docker-compose down --volum'es
+docker-compose down --volumes
 ```
+## Testing API endpoints
+1. Download Postman https://www.postman.com
+2. Utilize GET, POST, PUT, DELETE according to specs below
+	- Use "Params" and "Body" options where applicaple
+	- For the "Body" tab, make sure you're using JSON
+3. Validate Response section
 ## Build/Run Individually
 ```
 docker build . -t dnyf-user-api

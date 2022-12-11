@@ -33,6 +33,7 @@ services:
       - MYSQL_PASSWORD=dbuser
       - MYSQL_DATABASE=dnyf_users_db
     volumes:
+      - "./users.sql:/docker-entrypoint-initdb.d/01.sql"
       - mysql:/var/lib/mysql
       - mysql_config:/etc/mysql
     networks:
