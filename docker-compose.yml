@@ -1,52 +1,162 @@
-version: '3.7'
-
-services:
-  api:
-    image: dnyf-users-api
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    environment:
-      - name=value
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_USER=dbuser
-      - DB_PASS=dbuser
-      - DB_NAME=dnyf_users_db
-    ports:
-      - 4103:4103
-    networks:
-      dnyfcomposite:
-        aliases:
-          - dnyf-users-microservice
-      dnyfnet:
-    depends_on:
-      - db
+openapi: 3.0.0
+info:
+  version: 0.1.0
+  title: DNYF Users API
+  description: DNYF Users Service
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: http://localhost:4103/users
+paths:
+  /users:
+    get:
+      summary: Get collection of users
+      parameters:
+        - name: page_number
+          required: true
+          in: query
+          schema:
+            type: string
+          description: Page number
+        - name: page_count
+          required: true
+          in: query
+          schema:
+            type: string
+          description: Total page count
+      responses:
+        '200':
+          description: Success
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    description: Total number of records
+                  records:
+                    type: object
+                    description: The list of users
+                    properties:
+                      uid:
+                        type: string
+                        description: User ID
+                      first_name:
+                        type: string
+                        description: User's first name
+                      last_name:
+                        type: string
+                        description: User's last name
+                  links:
+                    type: object
+                    description: Navigation links
+                    properties:
+                      link:
+                        type: string
+                        description: next,previous link
+                  total_pages:
+                    type: integer
+                    description: Total amount of pages
+                  current_page:
+                    type: integer
+                    description: Current page number
+        '500':
+          description: Internal Server Error
+    post:
+      summary: Get or create current user
+      requestBody:
+        description: Inserts new user
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                uid:
+                  type: string
+                  description: New user id
+                first_name:
+                  type: string
+                  description: New user first name
+                last_name:
+                  type: string
+                  description: New user last name
+      responses:
+        '200':
+          description: success
+        '409':
+          description: User already exists
+          
+  /users/{uid}:
+    get:
+      summary: Get specific user
+      parameters:
+        - name: uid
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Found user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  uid:
+                    type: string
+                    description: User ID
+                  first_name:
+                    type: string
+                    description: User's first name
+                  last_name:
+                    type: string
+                    description: User's last name
+        '404':
+          description: User not found
   
-  db:
-    image: mysql:8.0
-    ports:
-      - 3307:3306
-    environment:
-      - MYSQL_ROOT_PASSWORD=dbuser
-      - MYSQL_USER=dbuser
-      - MYSQL_PASSWORD=dbuser
-      - MYSQL_DATABASE=dnyf_users_db
-    volumes:
-      - "./users.sql:/docker-entrypoint-initdb.d/01.sql"
-      - mysql:/var/lib/mysql
-      - mysql_config:/etc/mysql
-    networks:
-      dnyfcomposite:
-      dnyfnet:
-        aliases:
-          - dnyf_users_db
-
-volumes:
-  mysql:
-  mysql_config:
-
-networks:
-  dnyfnet:
-  dnyfcomposite:
-    external: true
+    delete:
+      summary: Delete specified user
+      parameters: 
+        - name: uid
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Successful deletion
+        '409':
+          description: Unable to delete user
+        '500':
+          description: Internal server error
+    
+    put:
+      summary: Update specified user's information
+      parameters: 
+        - name: uid
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        description: Information to be updated
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  description: First name to be updated
+                last_name:
+                  type: string
+                  description: Last name to be updated
+      responses:
+        '200':
+          description: Successfully updated information
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
