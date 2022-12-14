@@ -52,9 +52,15 @@ paths:
                     type: object
                     description: Navigation links
                     properties:
-                      link:
+                      href:
                         type: string
                         description: next,previous link
+                      rel:
+                        type: string
+                        description: next_page, prev_page, curr_page
+                      type:
+                        type: string
+                        description: "GET"
                   total_pages:
                     type: integer
                     description: Total amount of pages
