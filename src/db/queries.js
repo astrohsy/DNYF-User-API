@@ -52,11 +52,23 @@ async function getUsers(page_number, limit, offset) {
             const next_link = `/users/?page_number=${next}`;
             const curr_link = `/users/?page_number=${current_page}`;
 
-            const links = {
-                previous: prev_link,
-                next: next_link,
-                current: curr_link,
-            };
+            const links = [
+                {
+                    href: prev_link,
+                    rel: "prev_page",
+                    type: "GET",
+                },
+                {
+                    href: next_link,
+                    rel: "next_page",
+                    type: "GET",
+                },
+                {
+                    href: curr_link,
+                    rel: "curr_page",
+                    type: "GET",
+                },
+            ];
 
             const items = { total, records, total_pages, links, current_page };
             return { status: 200, response: items };
