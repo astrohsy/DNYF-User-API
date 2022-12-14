@@ -4,23 +4,26 @@ const User = require("../models/models");
 
 // Create user
 async function insertUser(uid, first_name, last_name) {
-    sequelize
+    const res = sequelize
         .sync({ force: false })
-        .then((res) => {
-            return User.create({
+        .then(async function (res) {
+            const result = await User.create({
                 uid: uid,
                 first_name: first_name,
                 last_name: last_name,
+            }).then((res) => {
+                return { status: 201, msg: `New User Registered` };
             });
-        })
-        .then((user) => {
-            console.log("User created: ", user);
-            return true;
+            return result;
         })
         .catch((err) => {
-            console.log(err);
-            return false;
+            if ((err.original.errno = 1062)) {
+                return { status: 409, response: `User already exists!` };
+            } else {
+                return { status: 500, response: `Internal Server Error` };
+            }
         });
+    return res;
 }
 
 // Find user
@@ -29,9 +32,9 @@ async function findUser(uid) {
         where: { uid: uid },
     });
     if (data != null) {
-        return data.dataValues;
+        return { status: 200, response: data.dataValues };
     } else {
-        return {};
+        return { status: 404, response: `Cannot find user with ID: ${uid}` };
     }
 }
 
@@ -42,10 +45,24 @@ async function getUsers(page_number, limit, offset) {
             const { count: total, rows: records } = data;
             const current_page = page_number ? +page_number : 0;
             const total_pages = Math.ceil(total / limit);
-            return { total, records, total_pages, current_page };
+
+            const previous = current_page == 0 ? 0 : current_page - 1;
+            const next = current_page + 1;
+            const prev_link = `/users/?page_number=${previous}`;
+            const next_link = `/users/?page_number=${next}`;
+            const curr_link = `/users/?page_number=${current_page}`;
+
+            const links = {
+                previous: prev_link,
+                next: next_link,
+                current: curr_link,
+            };
+
+            const items = { total, records, total_pages, links, current_page };
+            return { status: 200, response: items };
         })
         .catch((err) => {
-            return false;
+            return { status: 500, response: `Internal server error` };
         });
 }
 
@@ -63,14 +80,20 @@ async function updateUsers(uid, first_name, last_name) {
         .then((res) => {
             console.log(res);
             if (res == 1) {
-                return { result: true, status: 200 };
+                return {
+                    status: 200,
+                    response: `User: ${uid} information updated`,
+                };
             } else {
-                return { result: false, status: 403 };
+                return {
+                    status: 400,
+                    response: `No changes made for user: ${uid}`,
+                };
             }
         })
         .catch((err) => {
             console.log(err);
-            return { result: false, status: 500 };
+            return { status: 500, response: `Internal server error` };
         });
 }
 
@@ -79,14 +102,17 @@ async function deleteUser(uid) {
     return await User.destroy({ where: { uid: uid } })
         .then((res) => {
             if (res == 1) {
-                return { result: true, status: 200 };
+                return { status: 204, response: `User ${uid} deleted.` };
             } else {
-                return { result: false, status: 409 };
+                return {
+                    status: 409,
+                    response: `Unable to delete user with ID: ${uid}`,
+                };
             }
         })
         .catch((err) => {
             console.log(err);
-            return { result: false, status: 500 };
+            return { status: 500, response: `Internal Server Error` };
         });
 }
 
