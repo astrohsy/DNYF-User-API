@@ -44,7 +44,7 @@ const hello_friend = async function (req, res) {
 
 // Update current user
 const witness_protection_service = async function (req, res) {
-    const uid = parseInt(req.params.uid);
+    const uid = req.params.uid;
     const { first_name, last_name } = req.body;
     const { result, status } = await queries.updateUsers(
         uid,
@@ -65,7 +65,7 @@ const witness_protection_service = async function (req, res) {
 
 // Delete user
 const goodbye_friend = async function (req, res) {
-    const uid = parseInt(req.params.uid);
+    const uid = req.params.uid;
     const { result, status } = await queries.deleteUser(uid);
 
     if (result == true) {
