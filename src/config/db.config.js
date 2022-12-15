@@ -1,11 +1,6 @@
 require('dotenv').config()
 const Sequilize = require("sequelize");
 
-<<<<<<< HEAD
-require('dotenv').config();
-
-=======
->>>>>>> origin
 module.exports = new Sequilize({
     dialect: "mysql",
     host: process.env.DB_HOST | "db",
