@@ -2,6 +2,7 @@
 // const queries = require("../queries");
 // require("dotenv").config();
 
+<<<<<<< HEAD
 // function initDB() {
 //     const conn = mysql.createConnection({
 //         host: process.env.DB_HOST,
@@ -17,6 +18,23 @@
 //             }
 //         }
 //     );
+=======
+function initDB() {
+    const conn = mysql.createConnection({
+        host: process.env.DB_HOST | "db",
+        user: process.env.DB_USER | "dbuser",
+        password: process.env.DB_PASS | "dbuser",
+        port: process.env.DB_PORT | 3306,
+    });
+    conn.query(
+        "CREATE DATABASE IF NOT exists dnyf_users_db",
+        function (err, res) {
+            if (err) {
+                console.log(err);
+            }
+        }
+    );
+>>>>>>> origin
 
 //     conn.end();
 // }

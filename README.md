@@ -48,6 +48,11 @@ GET /users
 					"first_name": "string",
 					"last_name": "string"
 				},
+				"links": {
+					"href": "string",
+					"rel": "string",
+					"type": "GET"
+				}
 				"total_pages": integer,
 				"current_page": integer
 			}       

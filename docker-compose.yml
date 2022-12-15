@@ -15,7 +15,6 @@ services:
       dnyfnet:
     depends_on:
       - db
-  
   db:
     image: mysql:8.0
     ports:
