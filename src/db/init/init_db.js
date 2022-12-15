@@ -1,7 +1,24 @@
-const mysql = require("mysql2");
-const queries = require("../queries");
-require("dotenv").config();
+// const mysql = require("mysql2");
+// const queries = require("../queries");
+// require("dotenv").config();
 
+<<<<<<< HEAD
+// function initDB() {
+//     const conn = mysql.createConnection({
+//         host: process.env.DB_HOST,
+//         user: process.env.DB_USER,
+//         password: process.env.DB_PASS,
+//         port: process.env.DB_PORT | 3306,
+//     });
+//     conn.query(
+//         "CREATE DATABASE IF NOT exists dnyf_users_db",
+//         function (err, res) {
+//             if (err) {
+//                 console.log(err);
+//             }
+//         }
+//     );
+=======
 function initDB() {
     const conn = mysql.createConnection({
         host: process.env.DB_HOST | "db",
@@ -17,8 +34,9 @@ function initDB() {
             }
         }
     );
+>>>>>>> origin
 
-    conn.end();
-}
+//     conn.end();
+// }
 
-module.exports = { initDB };
+// module.exports = { initDB };
