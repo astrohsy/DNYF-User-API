@@ -6,13 +6,6 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    environment:
-      - name=value
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_USER=dbuser
-      - DB_PASS=dbuser
-      - DB_NAME=dnyf_users_db
     ports:
       - 4103:4103
     networks:

@@ -1,10 +1,8 @@
 const express = require("express");
 const app = express();
 const routers = require("./routers/users");
-const dbinit = require("./db/init/init_db");
-require("dotenv").config();
 
-dbinit.initDB();
+require("dotenv").config();
 
 app.use("/users", routers);
 

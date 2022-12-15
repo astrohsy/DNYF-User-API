@@ -1,7 +1,7 @@
-require("dotenv").config();
+require('dotenv').config()
 const Sequilize = require("sequelize");
 
-require("dotenv").config();
+require('dotenv').config();
 
 module.exports = new Sequilize({
     dialect: "mysql",
@@ -11,7 +11,7 @@ module.exports = new Sequilize({
     port: process.env.DB_PORT || 3306,
     database: process.env.DB_NAME,
     define: {
-        timestamps: false,
+        timestamps: false
     },
-    logging: (log) => console.log("logging:", log),
+    logging: (log) => console.log("logging:", log)
 });
